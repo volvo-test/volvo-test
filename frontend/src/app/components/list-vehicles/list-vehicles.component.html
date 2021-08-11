@@ -1,0 +1,80 @@
+<h2 class="text-center mt-3 mb-3">Vehicles</h2>
+
+<div *ngIf="isLoading" class="spinner-border text-primary" role="status"></div>
+
+<section *ngIf="!isLoading">
+  <div *ngIf="isError" class="alert alert-danger mb-3">
+    Some error occurs to load vehicles
+  </div>
+  <button
+    type="button"
+    class="mt-3 mb-3 btn btn-primary"
+    (click)="registerVehicle()"
+  >
+    Register Vehicle
+  </button>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Color</th>
+        <th scope="col">Number Passengers</th>
+        <th scope="col">Type</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let vehicle of vehicles">
+        <th>{{ vehicle.color }}</th>
+        <td>{{ vehicle.number_passengers }}</td>
+        <td>{{ vehicle.type }}</td>
+        <td>
+          <button
+            class="btn btn-success btn-sm rounded-0"
+            type="button"
+            data-toggle="tooltip"
+            data-placement="top"
+            title="Edit"
+            (click)="editVehicle(vehicle.chassi_id)"
+          >
+            <i class="bi bi-pencil-square"></i>
+          </button>
+        </td>
+        <td>
+          <button
+            class="btn btn-danger btn-sm rounded-0"
+            type="button"
+            data-toggle="tooltip"
+            data-placement="top"
+            title="Delete"
+            (click)="openModal(deleteModal, vehicle.chassi_id)"
+          >
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+<ng-template #deleteModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Are you sure that want to detele ?</h4>
+  </div>
+
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-primary btn-sm rounded-0"
+      (click)="closeModal()"
+    >
+      cancel
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger btn-sm rounded-0"
+      (click)="deleteVehicle()"
+    >
+      Delete
+    </button>
+  </div>
+</ng-template>
